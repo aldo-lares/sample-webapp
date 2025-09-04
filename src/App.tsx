@@ -1,3 +1,5 @@
+
+
 import React, { useState } from "react";
 import { NavBar } from "./components/NavBar";
 import { ProductProvider } from "./context/ProductContext";
@@ -5,10 +7,13 @@ import { HomePage } from "./pages/HomePage";
 import { InventoryPage } from "./pages/InventoryPage";
 import { ModifyQuantitiesPage } from "./pages/ModifyQuantitiesPage";
 import { PointOfSale } from "./components/PointOfSale";
+import { ProductRegistration } from "./components/ProductRegistration";
 import "./theme.css";
 
+type Page = 'home' | 'inventory' | 'modify' | 'pos' | 'products';
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState<Page>('home');
 
   const renderPage = () => {
     switch (currentPage) {
@@ -18,6 +23,12 @@ export default function App() {
         return <ModifyQuantitiesPage />;
       case 'pos':
         return <PointOfSale />;
+      case 'products':
+        return (
+          <main className='page-container'>
+            <ProductRegistration />
+          </main>
+        );
       default:
         return <HomePage />;
     }

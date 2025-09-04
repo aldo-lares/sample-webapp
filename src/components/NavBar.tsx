@@ -1,8 +1,8 @@
 import React from "react";
 
 interface NavBarProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
+  currentPage: 'home' | 'inventory' | 'modify' | 'pos' | 'products';
+  onNavigate: (page: 'home' | 'inventory' | 'modify' | 'pos' | 'products') => void;
 }
 
 export const NavBar: React.FC<NavBarProps> = ({ currentPage, onNavigate }) => {
@@ -34,6 +34,12 @@ export const NavBar: React.FC<NavBarProps> = ({ currentPage, onNavigate }) => {
             onClick={() => onNavigate('pos')}
           >
             Punto de Venta
+          </li>
+          <li 
+            className={currentPage === 'products' ? 'active' : ''}
+            onClick={() => onNavigate('products')}
+          >
+            Productos
           </li>
         </ul>
       </nav>

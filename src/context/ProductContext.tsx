@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-
 export interface Product {
   id: number;
   name: string;
@@ -12,6 +11,7 @@ interface ProductContextType {
   products: Product[];
   updateProductQuantity: (id: number, quantity: number) => void;
   getProduct: (id: number) => Product | undefined;
+  addProduct: (product: Omit<Product, 'id'>) => void;
 }
 
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
@@ -38,8 +38,17 @@ export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children })
     return products.find(product => product.id === id);
   };
 
+  const addProduct = (productData: Omit<Product, 'id'>) => {
+    const newId = Math.max(...products.map(p => p.id), 0) + 1;
+    const newProduct: Product = {
+      ...productData,
+      id: newId,
+    };
+    setProducts(prev => [...prev, newProduct]);
+  };
+
   return (
-    <ProductContext.Provider value={{ products, updateProductQuantity, getProduct }}>
+    <ProductContext.Provider value={{ products, updateProductQuantity, getProduct, addProduct }}>
       {children}
     </ProductContext.Provider>
   );
