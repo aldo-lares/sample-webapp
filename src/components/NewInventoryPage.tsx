@@ -9,7 +9,7 @@ interface InventoryPageProps {
 type SortField = 'name' | 'quantity';
 type SortDirection = 'asc' | 'desc';
 
-export const InventoryPage: React.FC<InventoryPageProps> = ({ products }) => {
+export const NewInventoryPage: React.FC<InventoryPageProps> = ({ products }) => {
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { NavBar, PageType } from "./components/NavBar";
-import { InventoryPage } from "./components/InventoryPage";
+import { ProductProvider } from "./context/ProductContext";
+import { HomePage } from "./pages/HomePage";
+import { InventoryPage } from "./pages/InventoryPage";
+import { ModifyQuantitiesPage } from "./pages/ModifyQuantitiesPage";
+import { PointOfSale } from "./components/PointOfSale";
+import { NewInventoryPage } from "./components/NewInventoryPage";
 import { UpdateInventoryPage } from "./components/UpdateInventoryPage";
 import { Product } from "./types/inventory";
 import { mockProducts, addStatusToProducts } from "./utils/inventory";
@@ -25,32 +30,28 @@ export default function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case 'inventory':
-        return <InventoryPage products={productsWithStatus} />;
+        return <InventoryPage />;
+      case 'modify':
+        return <ModifyQuantitiesPage />;
+      case 'pos':
+        return <PointOfSale />;
+      case 'new-inventory':
+        return <NewInventoryPage products={productsWithStatus} />;
       case 'update-inventory':
         return <UpdateInventoryPage products={products} onUpdateProduct={handleUpdateProduct} />;
       default:
-        return (
-          <main className='home-container'>
-            <div className='logo-card'>
-              <div className='ms-logo' aria-label='Microsoft Logo'>
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <h1>Bienvenido</h1>
-              <p>Aplicación de ejemplo con React + TypeScript.</p>
-              <p>Use el menú de navegación para acceder al inventario.</p>
-            </div>
-          </main>
-        );
+        return <HomePage />;
     }
   };
 
   return (
-    <div className='app-shell'>
-      <NavBar currentPage={currentPage} onPageChange={setCurrentPage} />
-      {renderCurrentPage()}
-    </div>
+    <ProductProvider>
+      <div className='app-shell'>
+        <NavBar currentPage={currentPage} onPageChange={setCurrentPage} />
+        <main className='main-content'>
+          {renderCurrentPage()}
+        </main>
+      </div>
+    </ProductProvider>
   );
 }
