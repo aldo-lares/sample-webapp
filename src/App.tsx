@@ -1,35 +1,26 @@
 import React, { useState } from "react";
 import { NavBar } from "./components/NavBar";
+import { ProductProvider } from "./context/ProductContext";
+import { HomePage } from "./pages/HomePage";
+import { InventoryPage } from "./pages/InventoryPage";
+import { ModifyQuantitiesPage } from "./pages/ModifyQuantitiesPage";
+import { PointOfSale } from "./components/PointOfSale";
 import { ProductRegistration } from "./components/ProductRegistration";
 import "./theme.css";
 
-type Page = 'home' | 'products';
+type Page = 'home' | 'inventory' | 'modify' | 'pos' | 'products';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
 
-  const handleNavigate = (page: Page) => {
-    setCurrentPage(page);
-  };
-
   const renderPage = () => {
     switch (currentPage) {
-      case 'home':
-        return (
-          <main className='home-container'>
-            <div className='logo-card'>
-              <div className='ms-logo' aria-label='Microsoft Logo'>
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <h1>Bienvenido</h1>
-              <p>Aplicación de ejemplo con React + TypeScript.</p>
-              <p>Use la navegación para registrar nuevos productos.</p>
-            </div>
-          </main>
-        );
+      case 'inventory':
+        return <InventoryPage />;
+      case 'modify':
+        return <ModifyQuantitiesPage />;
+      case 'pos':
+        return <PointOfSale />;
       case 'products':
         return (
           <main className='page-container'>
@@ -37,14 +28,18 @@ export default function App() {
           </main>
         );
       default:
-        return null;
+        return <HomePage />;
     }
   };
 
   return (
-    <div className='app-shell'>
-      <NavBar currentPage={currentPage} onNavigate={handleNavigate} />
-      {renderPage()}
-    </div>
+    <ProductProvider>
+      <div className='app-shell'>
+        <NavBar currentPage={currentPage} onNavigate={setCurrentPage} />
+        <main className='main-content'>
+          {renderPage()}
+        </main>
+      </div>
+    </ProductProvider>
   );
 }

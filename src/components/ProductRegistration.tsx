@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { ProductFormData } from '../types/Product';
-import { ProductService } from '../services/ProductService';
+import { useProducts } from '../context/ProductContext';
+
+interface ProductFormData {
+  name: string;
+  description: string;
+  unitPrice: string;
+  quantity: string;
+  category: string;
+}
 
 interface ProductRegistrationProps {
   onProductSaved?: () => void;
 }
 
 export const ProductRegistration: React.FC<ProductRegistrationProps> = ({ onProductSaved }) => {
+  const { products, addProduct } = useProducts();
   const [formData, setFormData] = useState<ProductFormData>({
     name: '',
     description: '',
@@ -24,6 +32,8 @@ export const ProductRegistration: React.FC<ProductRegistrationProps> = ({ onProd
 
     if (!formData.name.trim()) {
       newErrors.name = 'El nombre es obligatorio';
+    } else if (products.some(p => p.name.toLowerCase() === formData.name.toLowerCase())) {
+      newErrors.name = `Ya existe un producto con el nombre "${formData.name}"`;
     }
 
     if (!formData.description.trim()) {
@@ -63,8 +73,15 @@ export const ProductRegistration: React.FC<ProductRegistrationProps> = ({ onProd
     setIsSubmitting(true);
     
     try {
-      const product = ProductService.saveProduct(formData);
-      setSuccessMessage(`Producto "${product.name}" registrado exitosamente`);
+      const productData = {
+        name: formData.name.trim(),
+        quantity: parseInt(formData.quantity, 10),
+        category: formData.category.trim() || 'Sin categoría',
+        price: parseFloat(formData.unitPrice),
+      };
+
+      addProduct(productData);
+      setSuccessMessage(`Producto "${productData.name}" registrado exitosamente`);
       
       // Reset form
       setFormData({
