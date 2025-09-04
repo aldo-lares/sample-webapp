@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  inventory: number;
-}
+import { useProducts } from "../context/ProductContext";
 
 interface Sale {
   id: number;
@@ -17,15 +11,8 @@ interface Sale {
 }
 
 export const PointOfSale: React.FC = () => {
-  // Mock product data
-  const [products, setProducts] = useState<Product[]>([
-    { id: 1, name: "Producto A", price: 10.50, inventory: 25 },
-    { id: 2, name: "Producto B", price: 15.75, inventory: 10 },
-    { id: 3, name: "Producto C", price: 8.25, inventory: 50 },
-    { id: 4, name: "Producto D", price: 22.00, inventory: 5 },
-    { id: 5, name: "Producto E", price: 12.30, inventory: 0 },
-  ]);
-
+  const { products, updateProductQuantity } = useProducts();
+  
   const [sales, setSales] = useState<Sale[]>([]);
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
@@ -44,10 +31,10 @@ export const PointOfSale: React.FC = () => {
       return;
     }
 
-    if (quantity > selectedProduct.inventory) {
+    if (quantity > selectedProduct.quantity) {
       setMessage({ 
         type: 'error', 
-        text: `Stock insuficiente. Solo hay ${selectedProduct.inventory} unidades disponibles` 
+        text: `Stock insuficiente. Solo hay ${selectedProduct.quantity} unidades disponibles` 
       });
       return;
     }
@@ -62,14 +49,8 @@ export const PointOfSale: React.FC = () => {
       timestamp: new Date()
     };
 
-    // Update inventory
-    setProducts(prevProducts => 
-      prevProducts.map(product => 
-        product.id === selectedProduct.id 
-          ? { ...product, inventory: product.inventory - quantity }
-          : product
-      )
-    );
+    // Update inventory using the context
+    updateProductQuantity(selectedProduct.id, selectedProduct.quantity - quantity);
 
     // Add sale to history
     setSales(prevSales => [newSale, ...prevSales]);
@@ -107,9 +88,9 @@ export const PointOfSale: React.FC = () => {
                 <option 
                   key={product.id} 
                   value={product.id}
-                  disabled={product.inventory === 0}
+                  disabled={product.quantity === 0}
                 >
-                  {product.name} - ${product.price.toFixed(2)} (Stock: {product.inventory})
+                  {product.name} - ${product.price.toFixed(2)} (Stock: {product.quantity})
                 </option>
               ))}
             </select>
@@ -121,7 +102,7 @@ export const PointOfSale: React.FC = () => {
               id="quantity-input"
               type="number"
               min="1"
-              max={selectedProduct?.inventory || 1}
+              max={selectedProduct?.quantity || 1}
               value={quantity}
               onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
               className="quantity-input"
@@ -137,7 +118,7 @@ export const PointOfSale: React.FC = () => {
 
           <button 
             onClick={handleSale}
-            disabled={!selectedProduct || selectedProduct.inventory === 0}
+            disabled={!selectedProduct || selectedProduct.quantity === 0}
             className="sell-button"
           >
             Vender

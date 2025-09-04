@@ -1,24 +1,36 @@
 import React from "react";
 
 interface NavBarProps {
-  currentView: 'home' | 'pos';
-  onNavigate: (view: 'home' | 'pos') => void;
+  currentPage: string;
+  onNavigate: (page: string) => void;
 }
 
-export const NavBar: React.FC<NavBarProps> = ({ currentView, onNavigate }) => {
+export const NavBar: React.FC<NavBarProps> = ({ currentPage, onNavigate }) => {
   return (
     <header className='nav-bar'>
       <div className='brand'>Sample</div>
       <nav>
         <ul>
           <li 
-            className={currentView === 'home' ? 'active' : ''}
+            className={currentPage === 'home' ? 'active' : ''}
             onClick={() => onNavigate('home')}
           >
             Home
           </li>
           <li 
-            className={currentView === 'pos' ? 'active' : ''}
+            className={currentPage === 'inventory' ? 'active' : ''}
+            onClick={() => onNavigate('inventory')}
+          >
+            Inventario
+          </li>
+          <li 
+            className={currentPage === 'modify' ? 'active' : ''}
+            onClick={() => onNavigate('modify')}
+          >
+            Modificar Cantidades
+          </li>
+          <li 
+            className={currentPage === 'pos' ? 'active' : ''}
             onClick={() => onNavigate('pos')}
           >
             Punto de Venta
