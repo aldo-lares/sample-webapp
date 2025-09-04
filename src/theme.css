@@ -1,1 +1,240 @@
 :root{--color-black:#000;--color-navy:#001f3f;--color-purple:#6a0dad;--color-greige:#f2f0eb;--gradient:linear-gradient(135deg,#000,#001f3f 55%,#6a0dad);}body,html,#root{margin:0;padding:0;height:100%;font-family:Segoe UI,Arial,sans-serif;background:#000;color:#fff;}body{background:radial-gradient(circle at 30% 30%,#001f3f 0,#000 60%) fixed;} .app-shell{display:flex;flex-direction:column;min-height:100vh;} .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.25rem;background:var(--gradient);box-shadow:0 2px 6px rgba(0,0,0,.5);position:sticky;top:0;z-index:10;} .nav-bar .brand{font-weight:600;letter-spacing:.5px;} .nav-bar ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem;} .nav-bar li{cursor:pointer;padding:.35rem .75rem;border-radius:6px;transition:.25s;background:rgba(255,255,255,0.05);} .nav-bar li.active,.nav-bar li:hover{background:rgba(255,255,255,.15);} .home-container{flex:1;display:flex;align-items:center;justify-content:center;padding:2rem;} .logo-card{background:var(--color-greige);padding:3rem 3.5rem;border-radius:24px;box-shadow:0 4px 18px -6px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.08);text-align:center;max-width:560px;color:#111;} .logo-card h1{margin-top:1.25rem;font-size:2.25rem;background:var(--gradient);-webkit-background-clip:text;color:transparent;} .ms-logo{width:96px;height:96px;display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:8px;margin:0 auto;} .ms-logo span{display:block;} .ms-logo span:nth-child(1){background:#f25022;} .ms-logo span:nth-child(2){background:#7fba00;} .ms-logo span:nth-child(3){background:#00a4ef;} .ms-logo span:nth-child(4){background:#ffb900;} .logo-card p{margin:.5rem 0 0;font-size:1rem;line-height:1.5;color:#222;} @media (max-width:640px){.logo-card{padding:2rem;border-radius:20px;} .logo-card h1{font-size:1.75rem;} .nav-bar{flex-wrap:wrap;gap:.75rem;}}
+
+/* Inventory Page Styles */
+.inventory-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.inventory-page h1 {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.inventory-page p {
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.inventory-table-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.inventory-table th {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.inventory-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s;
+}
+
+.inventory-table th.sortable:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.inventory-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.inventory-table tr.status-low {
+  background: rgba(255, 82, 82, 0.1);
+}
+
+.inventory-table tr.status-medium {
+  background: rgba(255, 193, 7, 0.1);
+}
+
+.inventory-table tr.status-high {
+  background: rgba(40, 167, 69, 0.1);
+}
+
+.product-name {
+  font-weight: 500;
+}
+
+.product-quantity {
+  font-weight: 600;
+  text-align: center;
+}
+
+.product-status {
+  text-align: center;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+}
+
+.status-text {
+  font-size: 0.9rem;
+}
+
+.inventory-summary {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  color: #ccc;
+}
+
+/* Update Inventory Page Styles */
+.update-inventory-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.update-inventory-page h1 {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-bottom: 1rem;
+}
+
+.batch-actions {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.btn-update-all {
+  background: var(--gradient);
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-update-all:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.update-inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.product-update-item {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.product-update-item:hover {
+  transform: translateY(-2px);
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.current-status {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+
+.product-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.quantity-input {
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 120px;
+  font-size: 1rem;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-update {
+  background: rgba(40, 167, 69, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-update:hover:not(:disabled) {
+  background: rgba(40, 167, 69, 1);
+}
+
+.btn-update:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.success-message {
+  background: rgba(40, 167, 69, 0.2);
+  color: #28a745;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .inventory-page, .update-inventory-page {
+    padding: 1rem;
+  }
+  
+  .product-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .product-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .quantity-input {
+    width: 100%;
+  }
+}
