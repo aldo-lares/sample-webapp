@@ -5,6 +5,7 @@ export interface Product {
   name: string;
   quantity: number;
   category: string;
+  price: number;
 }
 
 interface ProductContextType {
@@ -16,12 +17,12 @@ interface ProductContextType {
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 
 const initialProducts: Product[] = [
-  { id: 1, name: 'Laptop Dell', quantity: 25, category: 'Electrónicos' },
-  { id: 2, name: 'Mouse Inalámbrico', quantity: 50, category: 'Accesorios' },
-  { id: 3, name: 'Teclado Mecánico', quantity: 30, category: 'Accesorios' },
-  { id: 4, name: 'Monitor 24"', quantity: 15, category: 'Electrónicos' },
-  { id: 5, name: 'Audífonos Bluetooth', quantity: 40, category: 'Audio' },
-  { id: 6, name: 'Cámara Web HD', quantity: 20, category: 'Accesorios' },
+  { id: 1, name: 'Laptop Dell', quantity: 25, category: 'Electrónicos', price: 899.99 },
+  { id: 2, name: 'Mouse Inalámbrico', quantity: 50, category: 'Accesorios', price: 29.99 },
+  { id: 3, name: 'Teclado Mecánico', quantity: 30, category: 'Accesorios', price: 89.99 },
+  { id: 4, name: 'Monitor 24"', quantity: 15, category: 'Electrónicos', price: 199.99 },
+  { id: 5, name: 'Audífonos Bluetooth', quantity: 40, category: 'Audio', price: 79.99 },
+  { id: 6, name: 'Cámara Web HD', quantity: 20, category: 'Accesorios', price: 59.99 },
 ];
 
 export const ProductProvider: React.FC<{ children: ReactNode }> = ({ children }) => {

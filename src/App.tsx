@@ -4,6 +4,7 @@ import { ProductProvider } from "./context/ProductContext";
 import { HomePage } from "./pages/HomePage";
 import { InventoryPage } from "./pages/InventoryPage";
 import { ModifyQuantitiesPage } from "./pages/ModifyQuantitiesPage";
+import { PointOfSale } from "./components/PointOfSale";
 import "./theme.css";
 
 export default function App() {
@@ -15,6 +16,8 @@ export default function App() {
         return <InventoryPage />;
       case 'modify':
         return <ModifyQuantitiesPage />;
+      case 'pos':
+        return <PointOfSale />;
       default:
         return <HomePage />;
     }

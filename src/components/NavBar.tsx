@@ -29,6 +29,12 @@ export const NavBar: React.FC<NavBarProps> = ({ currentPage, onNavigate }) => {
           >
             Modificar Cantidades
           </li>
+          <li 
+            className={currentPage === 'pos' ? 'active' : ''}
+            onClick={() => onNavigate('pos')}
+          >
+            Punto de Venta
+          </li>
         </ul>
       </nav>
     </header>
